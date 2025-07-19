@@ -32,8 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        walletBalanceElement.innerHTML = '<div class="loader"></div>';
         try {
-            const response = await fetch(RPC_URL, {
+            const balanceResponse = await fetch(RPC_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,14 +47,66 @@ document.addEventListener('DOMContentLoaded', () => {
                 }),
             });
 
-            const data = await response.json();
-            if (data.error) {
-                throw new Error(data.error.message);
+            const balanceData = await balanceResponse.json();
+            if (balanceData.error) {
+                throw new Error(balanceData.error.message);
             }
 
-            const balanceInWei = parseInt(data.result, 16);
+            const balanceInWei = parseInt(balanceData.result, 16);
             const balanceInMega = balanceInWei / 1e18;
             walletBalanceElement.textContent = `MEGA: ${balanceInMega.toFixed(4)}`;
+
+            // Fetch wallet activity
+            const activityResponse = await fetch(RPC_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'eth_getLogs',
+                    params: [{
+                        fromBlock: '0x0',
+                        toBlock: 'latest',
+                        topics: [
+                            '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
+                            null,
+                            `0x${address.substring(2).padStart(64, '0')}`
+                        ]
+                    }],
+                    id: 1,
+                }),
+            });
+
+            const activityData = await activityResponse.json();
+            if (activityData.error) {
+                throw new Error(activityData.error.message);
+            }
+
+            const walletActivityContainer = document.getElementById('wallet-activity');
+            walletActivityContainer.innerHTML = ''; // Clear previous activity
+
+            if (activityData.result.length === 0) {
+                walletActivityContainer.innerHTML = '<p>No recent activity found.</p>';
+                return;
+            }
+
+            for (const log of activityData.result) {
+                const fromAddress = `0x${log.topics[1].slice(26)}`;
+                const toAddress = `0x${log.topics[2].slice(26)}`;
+                const amount = parseInt(log.data, 16);
+
+                const activityElement = document.createElement('div');
+                activityElement.classList.add('bg-gray-700', 'p-4', 'rounded-lg', 'mb-2');
+                activityElement.innerHTML = `
+                    <p><strong>From:</strong> ${fromAddress}</p>
+                    <p><strong>To:</strong> ${toAddress}</p>
+                    <p><strong>Amount:</strong> ${amount / 1e18}</p>
+                    <p><strong>Transaction Hash:</strong> <a href="https://megaexplorer.xyz/tx/${log.transactionHash}" target="_blank" class="text-blue-400 hover:underline">${log.transactionHash.substring(0, 20)}...</a></p>
+                `;
+                walletActivityContainer.appendChild(activityElement);
+            }
+
         } catch (error) {
             walletBalanceElement.textContent = `Error: ${error.message}`;
         }
@@ -85,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const latestBlockNumber = parseInt(data.result, 16);
+            document.getElementById('total-blocks-container').textContent = `Total Blocks: ${latestBlockNumber}`;
             blocksContainer.innerHTML = ''; // Clear previous blocks
 
             for (let i = 0; i < 25; i++) {
@@ -111,13 +165,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const gasUsed = parseInt(block.gasUsed, 16);
                 const timestamp = new Date(parseInt(block.timestamp, 16) * 1000).toLocaleString();
 
-                const blockElement = document.createElement('div');
-                blockElement.classList.add('bg-gray-700', 'p-4', 'rounded-lg');
+                const blockElement = document.createElement('tr');
                 blockElement.innerHTML = `
-                    <p><strong>Block #:</strong> ${blockNumber}</p>
-                    <p><strong>Hash:</strong> <a href="https://megaexplorer.xyz/block/${block.hash}" target="_blank" class="text-blue-400 hover:underline">${block.hash.substring(0, 20)}...</a></p>
-                    <p><strong>Gas Used:</strong> ${gasUsed}</p>
-                    <p><strong>Timestamp:</strong> ${timestamp}</p>
+                    <td class="p-2">${blockNumber}</td>
+                    <td class="p-2">${timestamp}</td>
+                    <td class="p-2">${gasUsed}</td>
+                    <td class="p-2"><a href="https://megaexplorer.xyz/block/${block.hash}" target="_blank" class="text-blue-400 hover:underline">${block.hash.substring(0, 20)}...</a></td>
                 `;
                 blocksContainer.appendChild(blockElement);
             }

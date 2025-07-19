@@ -28,15 +28,34 @@
             </div>
             <p id="walletBalance" class="mt-4"></p>
             <p class="text-sm text-gray-400 mt-2">⚠️ Please note that all blockchain data is public. Only your wallet address and the on-chain data linked to it can be viewed.</p>
+
+            <div id="wallet-activity-container" class="mt-8">
+                <h3 class="text-xl font-bold mb-4">Wallet Activity</h3>
+                <div id="wallet-activity"></div>
+            </div>
         </div>
 
         <!-- Recent Blocks -->
         <div class="bg-gray-800 p-6 rounded-lg">
-            <h2 class="text-2xl font-bold mb-4">Recent Blocks</h2>
-            <div id="blocks-loader" class="loader"></div>
-            <div id="blocks-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- Blocks will be injected here by JavaScript -->
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold">Recent Blocks</h2>
+                <div id="total-blocks-container" class="text-lg"></div>
             </div>
+            <p class="text-gray-400 mb-4">The last 25 blocks from the MegaETH chain, updated every 5 seconds.</p>
+            <div id="blocks-loader" class="loader"></div>
+            <table id="blocks-table" class="w-full text-left">
+                <thead>
+                    <tr>
+                        <th class="p-2">Block</th>
+                        <th class="p-2">Timestamp</th>
+                        <th class="p-2">Gas Used</th>
+                        <th class="p-2">Hash</th>
+                    </tr>
+                </thead>
+                <tbody id="blocks-container">
+                    <!-- Blocks will be injected here by JavaScript -->
+                </tbody>
+            </table>
         </div>
     </div>
 
