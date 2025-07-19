@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     fetchRecentBlocks();
-    setInterval(fetchRecentBlocks, 5000);
+    setInterval(fetchRecentBlocks, 15000);
 
     // ERC-20 Transfer Feed
     const transfersContainer = document.getElementById('transfers-container');
