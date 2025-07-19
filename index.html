@@ -7,8 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-900 text-white">
-    <nav class="bg-gray-800 p-4">
+<body>
+    <nav class="glass-card m-4">
         <div class="container mx-auto flex justify-between">
             <a href="#home" class="text-white font-bold">MegaETH Dashboard</a>
             <div>
@@ -20,11 +20,11 @@
 
     <div id="home" class="container mx-auto p-4">
         <!-- Wallet Checker -->
-        <div class="bg-gray-800 p-6 rounded-lg mb-8">
+        <div class="glass-card mb-8">
             <h2 class="text-2xl font-bold mb-4">Wallet Checker</h2>
             <div class="flex">
-                <input type="text" id="walletAddress" class="bg-gray-700 text-white w-full p-2 rounded-l-lg" placeholder="Enter MegaETH Wallet Address">
-                <button id="checkBalance" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-r-lg">Check Balance</button>
+                <input type="text" id="walletAddress" class="glass-input w-full" placeholder="Enter MegaETH Wallet Address">
+                <button id="checkBalance" class="glass-button ml-2">Check Balance</button>
             </div>
             <p id="walletBalance" class="mt-4"></p>
             <p class="text-sm text-gray-400 mt-2">⚠️ Please note that all blockchain data is public. Only your wallet address and the on-chain data linked to it can be viewed.</p>
@@ -36,7 +36,7 @@
         </div>
 
         <!-- Recent Blocks -->
-        <div class="bg-gray-800 p-6 rounded-lg">
+        <div class="glass-card">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-2xl font-bold">Recent Blocks</h2>
                 <div id="total-blocks-container" class="text-lg"></div>
@@ -61,11 +61,11 @@
 
     <div id="erc20-feed" class="container mx-auto p-4 hidden">
         <!-- ERC-20 Transfer Feed -->
-        <div class="bg-gray-800 p-6 rounded-lg mb-8">
+        <div class="glass-card mb-8">
             <h2 class="text-2xl font-bold mb-4">ERC-20 Transfer Feed</h2>
             <div class="flex mb-4">
-                <input type="text" id="contractAddress" class="bg-gray-700 text-white w-full p-2 rounded-l-lg" placeholder="Filter by ERC-20 Contract Address (optional)">
-                <button id="filterTransfers" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-r-lg">Filter</button>
+                <input type="text" id="contractAddress" class="glass-input w-full" placeholder="Filter by ERC-20 Contract Address (optional)">
+                <button id="filterTransfers" class="glass-button ml-2">Filter</button>
             </div>
             <div id="transfers-loader" class="loader"></div>
             <div id="transfers-container" class="grid grid-cols-1 gap-4">
@@ -74,11 +74,11 @@
         </div>
 
         <!-- Contract Inspector -->
-        <div class="bg-gray-800 p-6 rounded-lg">
+        <div class="glass-card">
             <h2 class="text-2xl font-bold mb-4">Contract Inspector</h2>
             <div class="flex">
-                <input type="text" id="inspectorAddress" class="bg-gray-700 text-white w-full p-2 rounded-l-lg" placeholder="Enter Contract Address">
-                <button id="inspectContract" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-r-lg">Inspect</button>
+                <input type="text" id="inspectorAddress" class="glass-input w-full" placeholder="Enter Contract Address">
+                <button id="inspectContract" class="glass-button ml-2">Inspect</button>
             </div>
             <div id="contract-info" class="mt-4"></div>
         </div>
