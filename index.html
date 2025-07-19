@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MegaETH Chain Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <nav class="bg-gray-800 p-4">
+        <div class="container mx-auto flex justify-between">
+            <a href="#home" class="text-white font-bold">MegaETH Dashboard</a>
+            <div>
+                <a href="#home" class="text-gray-300 hover:text-white px-3">Home</a>
+                <a href="#erc20-feed" class="text-gray-300 hover:text-white px-3">ERC-20 Transfers</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="home" class="container mx-auto p-4">
+        <!-- Wallet Checker -->
+        <div class="bg-gray-800 p-6 rounded-lg mb-8">
+            <h2 class="text-2xl font-bold mb-4">Wallet Checker</h2>
+            <div class="flex">
+                <input type="text" id="walletAddress" class="bg-gray-700 text-white w-full p-2 rounded-l-lg" placeholder="Enter MegaETH Wallet Address">
+                <button id="checkBalance" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-r-lg">Check Balance</button>
+            </div>
+            <p id="walletBalance" class="mt-4"></p>
+            <p class="text-sm text-gray-400 mt-2">⚠️ Please note that all blockchain data is public. Only your wallet address and the on-chain data linked to it can be viewed.</p>
+        </div>
+
+        <!-- Recent Blocks -->
+        <div class="bg-gray-800 p-6 rounded-lg">
+            <h2 class="text-2xl font-bold mb-4">Recent Blocks</h2>
+            <div id="blocks-loader" class="loader"></div>
+            <div id="blocks-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Blocks will be injected here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div id="erc20-feed" class="container mx-auto p-4 hidden">
+        <!-- ERC-20 Transfer Feed -->
+        <div class="bg-gray-800 p-6 rounded-lg mb-8">
+            <h2 class="text-2xl font-bold mb-4">ERC-20 Transfer Feed</h2>
+            <div class="flex mb-4">
+                <input type="text" id="contractAddress" class="bg-gray-700 text-white w-full p-2 rounded-l-lg" placeholder="Filter by ERC-20 Contract Address (optional)">
+                <button id="filterTransfers" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-r-lg">Filter</button>
+            </div>
+            <div id="transfers-loader" class="loader"></div>
+            <div id="transfers-container" class="grid grid-cols-1 gap-4">
+                <!-- Transfers will be injected here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Contract Inspector -->
+        <div class="bg-gray-800 p-6 rounded-lg">
+            <h2 class="text-2xl font-bold mb-4">Contract Inspector</h2>
+            <div class="flex">
+                <input type="text" id="inspectorAddress" class="bg-gray-700 text-white w-full p-2 rounded-l-lg" placeholder="Enter Contract Address">
+                <button id="inspectContract" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-r-lg">Inspect</button>
+            </div>
+            <div id="contract-info" class="mt-4"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
